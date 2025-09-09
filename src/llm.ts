@@ -40,7 +40,7 @@ export class LLM {
   }
 
   private _initLLM() {
-    console.debug(`[DEBUG] Initialisation du LLM ${this.provider} avec modèle ${this.model}`);
+    console.debug(`[DEBUG] ${this.provider} LLM initialization with model ${this.model}`);
     // Chooses the right LangChain wrapper depending on this.provider
     if (this.provider === 'mistral') {
       // @langchain/mistralai reads MISTRAL_API_KEY from env by default
@@ -53,7 +53,7 @@ export class LLM {
       return new ChatGoogleGenerativeAI({ model: this.model, temperature: 0 });
     } else {
       // Throws an error if provider is unknown
-      throw new Error(`Fournisseur inconnu : ${this.provider}`);
+      throw new Error(`Unknown provider: ${this.provider}`);
     }
   }
 
@@ -73,12 +73,12 @@ export class LLM {
       return [sysPrompt, humPrompt];
     } catch (e) {
       // If either is missing, throws an error
-      throw new Error(`Prompt ${name} manquant : ${sysPath} ou ${humPath}`);
+      throw new Error(`Missing prompt ${name}: ${sysPath} or ${humPath}`);
     }
   }
 
   private async _invoke(sysPrompt: string, humPrompt: string): Promise<string> {
-    console.debug('[DEBUG] Appel au LLM...');
+    console.debug('[DEBUG] Calling LLM...');
     // Builds a messages array with a system + human message
     const messages = [new SystemMessage({ content: sysPrompt }), new HumanMessage({ content: humPrompt })];
     // Calls this.llm.invoke(messages) → sends prompts to the model
@@ -99,7 +99,7 @@ export class LLM {
 
     // Expects the LLM output to contain a marker REPONSE FINALE :
     const parts = response.split('REPONSE FINALE :');
-    if (parts.length < 2) throw new Error(`Réponse invalide du LLM : ${response}`);
+    if (parts.length < 2) throw new Error(`LLM response not valid: ${response}`);
     // Returns only the part after that marker
     return parts[1].trim();
   }
@@ -115,7 +115,7 @@ export class LLM {
 
     // Extracts the final result after REPONSE FINALE :
     const parts = response.split('REPONSE FINALE :');
-    if (parts.length < 2) throw new Error(`Format de réponse invalide : ${response}`);
+    if (parts.length < 2) throw new Error(`Response shape not valid: ${response}`);
     return parts[1].trim();
   }
 
@@ -130,7 +130,7 @@ export class LLM {
 
     // Extracts final response after the last REPONSE FINALE :
     const parts = response.split('REPONSE FINALE :');
-    if (parts.length < 2) throw new Error(`Réponse invalide du LLM : ${response}`);
+    if (parts.length < 2) throw new Error(`LLM response not valid: ${response}`);
     return parts.slice(-1)[0].trim();
   }
 }
