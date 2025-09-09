@@ -19,4 +19,4 @@ npm run start -- --provider openai --model gpt-4o --arbs-folder ./l10n --files s
 
 Notes:
 - Place your prompts in `/prompts/<name>.sys` and `/prompts/<name>.hum` (ex.: `chooseLanguage.sys`, `chooseLanguage.hum`, `process.sys`, `process.hum`, `amendArb.sys`, `amendArb.hum`).
-- Set environment variables from `.env` or the environment.
+- Set environment variables from `.env` or the environment. Look at .env.example file for API keys name
