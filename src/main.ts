@@ -89,7 +89,7 @@ async function main() {
   try {
     arbContent = await fs.readFile(targetArbPath, { encoding: 'utf8' });
   } catch (e) {
-    console.warn(`[WARNING] Fichier ARB cible introuvable, initialisé à objet vide : ${targetArbPath}`);
+    console.warn(`[WARNING] Target ARB file not found, initialised to empty object: ${targetArbPath}`);
   }
 
   //// Process each Flutter file
@@ -100,11 +100,11 @@ async function main() {
     try {
       await fs.access(filePath);
     } catch (e) {
-      console.warn(`[WARNING] Fichier Flutter introuvable : ${filePath}`);
+      console.warn(`[WARNING] Flutter file not found: ${filePath}`);
       continue;
     }
 
-    console.info(`[INFO] Traitement du fichier : ${filePath}`);
+    console.info(`[INFO] File processing: ${filePath}`);
     const flutterContent = await fs.readFile(filePath, { encoding: 'utf8' });
 
     // Sends content to the LLM with the current ARB and language
@@ -118,7 +118,7 @@ async function main() {
     const arbLines = parts[0].trim();
     const updatedFlutter = (parts[1] || '').trim();
 
-    console.debug(`[DEBUG] Lignes ARB créées : ${arbLines.slice(0, 200)}`);
+    console.debug(`[DEBUG] ARB lines created: ${arbLines.slice(0, 200)}`);
 
     //// Merge ARB updates
     // Merges new ARB entries into the accumulated fullArbLines
@@ -128,7 +128,7 @@ async function main() {
     // Reads existing target ARB
     const fullArbJson = JSON.stringify(fullArbLines, null, 2);
 
-    console.info(`[INFO] Mise à jour du fichier ARB : ${targetArbPath}`);
+    console.info(`[INFO] ARB file update: ${targetArbPath}`);
     let existing = '{}';
     try {
       existing = await fs.readFile(targetArbPath, { encoding: 'utf8' });
@@ -143,19 +143,19 @@ async function main() {
 
     //// Update Flutter file if modified
     if (updatedFlutter) {
-      console.info(`[INFO] Mise à jour du fichier Flutter : ${filePath}`);
+      console.info(`[INFO] Flutter file update: ${filePath}`);
       await atomicWrite(filePath, updatedFlutter);
     }
   }
 
   //// Translate into other languages
   const otherArbFiles = arbFiles.filter((f) => f !== targetArbPath);
-  console.info(`[INFO] Traduction dans les autres langues : ${otherArbFiles.map((f) => path.basename(f))}`);
+  console.info(`[INFO] Translation into other languages: ${otherArbFiles.map((f) => path.basename(f))}`);
   
   // After processing the main language, loop over all other ARB files
   for (const arbFile of otherArbFiles) {
     const lang = path.basename(arbFile).split('_')[1].split('.')[0];
-    console.info(`[INFO] Traduction en cours pour : ${lang}`);
+    console.info(`[INFO] Translation in progress for: ${lang}`);
 
     // Calls LLM to translate fullArbLines into that language
     const translated = await llm.amendArb(JSON.stringify(fullArbLines, null, 2), lang);

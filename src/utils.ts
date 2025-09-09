@@ -8,7 +8,7 @@ export async function atomicWrite(filePath: string, content: string): Promise<vo
     try {
         await fs.access(filePath);
         await fs.copyFile(filePath, backupPath);
-        console.debug(`[DEBUG] Sauvegarde .bak créée : ${backupPath}`);
+        console.debug(`[DEBUG] .bak backup created : ${backupPath}`);
     } catch (e) {
         // file may not exist — that's ok
     }
@@ -23,14 +23,14 @@ export async function atomicWrite(filePath: string, content: string): Promise<vo
 
 export function mergeJsonStrings(existingJson: string, newJson: string): string {
     try {
-        console.debug('[DEBUG] Fusion des fichiers JSON...');
+        console.debug('[DEBUG] Merging JSON files...');
         const existingData = existingJson ? JSON.parse(existingJson) : {};
         const newData = newJson ? JSON.parse(newJson) : {};
         // conserver l'en-tête du premier (existing) comme dans la version Python fournie
         const merged = { ...newData, ...existingData };
         return JSON.stringify(merged, null, 2);
     } catch (e) {
-        console.error('[ERROR] Fusion JSON échouée :', e);
+        console.error('[ERROR] JSON merge failed :', e);
         return existingJson;
     }
 }
