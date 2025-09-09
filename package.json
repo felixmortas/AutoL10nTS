@@ -1,0 +1,37 @@
+{
+    "name": "l10n-llm-ts",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "dist/main.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "dev": "tsx src/main.ts",
+        "start": "node dist/main.js",
+        "test": "vitest"
+    },
+    "compilerOptions": {
+        "moduleResolution": "NodeNext",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "strict": true,
+        "outDir": "dist",
+        "rootDir": "src"
+    },
+    "include": ["src"],
+
+    "dependencies": {
+        "@langchain/core": "^0.3.75",
+        "@langchain/google-genai": "^0.2.17",
+        "@langchain/langgraph": "^0.4.9",
+        "@langchain/mistralai": "^0.2.1",
+        "@langchain/openai": "^0.6.11",
+        "commander": "^10.0.0",
+        "dotenv": "^16.0.0"
+    },
+    "devDependencies": {
+        "tsx": "^3.12.6",
+        "typescript": "^5.3.0",
+        "vitest": "^1.0.0"
+    }
+}
