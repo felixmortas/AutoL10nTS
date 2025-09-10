@@ -38,3 +38,4 @@ main().catch((err) => {
     console.error("[ERROR]", err);
     process.exit(1); // Exit with error code
 });
+//# sourceMappingURL=main.js.map

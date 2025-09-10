@@ -1,13 +1,20 @@
 {
-"compilerOptions": {
-"target": "ES2022",
-"module": "NodeNext",
-"moduleResolution": "nodenext",
-"outDir": "dist",
-"rootDir": "src",
-"strict": true,
-"esModuleInterop": true,
-"forceConsistentCasingInFileNames": true,
-"skipLibCheck": true
-}
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    // 🔹 Ajouts pour générer les types
+    "declaration": true,          // génère les fichiers .d.ts
+    "declarationMap": true,       // optionnel, utile pour le debug
+    "emitDeclarationOnly": false, // génère le JS + .d.ts
+    "sourceMap": true             // optionnel, pratique pour debug
+  },
+  "include": ["src"]
 }

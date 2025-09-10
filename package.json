@@ -1,10 +1,11 @@
 {
     "name": "auto-l10n-ts",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "private": false,
     "type": "module",
     "license": "MIT",
     "main": "dist/main.js",
+    "types": "dist/main.d.ts",
     "files": [
         "dist/**/*",
         "README.md",

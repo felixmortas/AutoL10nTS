@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.1] - 2025-09-11
+### Changed
+- TypeScript types are now fully supported for `auto-l10n-ts` package (added `.d.ts` declarations).
+
 ## [0.2.0] - 2025-09-10
 ### Added
 - Introduced the `L10nProcessor` class (`src/l10nProcessor.ts`) encapsulating all processing logic.
