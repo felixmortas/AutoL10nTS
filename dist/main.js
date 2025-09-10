@@ -12,6 +12,7 @@
  */
 import { Command } from "commander";
 import { L10nProcessor } from "./l10nProcessor.js";
+export { L10nProcessor } from "./l10nProcessor.js";
 const program = new Command();
 program
     .requiredOption("--provider <provider>", "LLM provider (mistral, openai, google)")

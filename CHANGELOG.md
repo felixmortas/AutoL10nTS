@@ -1,6 +1,10 @@
 # Changelog
 
-## [0.2.1] - 2025-09-11
+## [0.2.1] - 2025-09-10
+### Changed
+- Fix L10nProcessor not importable when loaded as package
+
+## [0.2.1] - 2025-09-10
 ### Changed
 - TypeScript types are now fully supported for `auto-l10n-ts` package (added `.d.ts` declarations).
 
