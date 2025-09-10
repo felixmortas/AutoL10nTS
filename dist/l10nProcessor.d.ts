@@ -13,6 +13,7 @@ export interface L10nProcessorOptions {
     model: string;
     arbsFolder: string;
     files: string[];
+    apiKey: string;
 }
 export declare class L10nProcessor {
     private llm;

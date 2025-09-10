@@ -17,7 +17,7 @@ export class L10nProcessor {
     opts;
     constructor(opts) {
         this.opts = opts;
-        this.llm = new LLM(opts.provider, opts.model);
+        this.llm = new LLM(opts.provider, opts.model, opts.apiKey);
     }
     /**
      * Executes the localization workflow:

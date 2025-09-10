@@ -12,12 +12,14 @@
  */
 import { Command } from "commander";
 import { L10nProcessor } from "./l10nProcessor.js";
+export { L10nProcessor } from "./l10nProcessor.js";
 const program = new Command();
 program
     .requiredOption("--provider <provider>", "LLM provider (mistral, openai, google)")
     .requiredOption("--model <model>", "Model name to use")
     .requiredOption("--arbs-folder <path>", "Directory of .arb localization files")
     .requiredOption("--files <files...>", "Flutter files to process");
+program.option("--api-key <key>", "API key for the LLM provider");
 program.parse(process.argv);
 /**
  * Main execution function:
@@ -31,6 +33,7 @@ async function main() {
         model: opts.model,
         arbsFolder: opts.arbsFolder ?? opts["arbs-folder"], // Commander normalizes kebab-case differently
         files: opts.files,
+        apiKey: opts.apiKey ?? process.env[`${opts.provider.toUpperCase()}_API_KEY`] ?? "",
     });
     await modifier.process();
 }

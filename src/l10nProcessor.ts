@@ -19,6 +19,7 @@ export interface L10nProcessorOptions {
   model: string;
   arbsFolder: string;
   files: string[];
+  apiKey: string;
 }
 
 export class L10nProcessor {
@@ -27,7 +28,7 @@ export class L10nProcessor {
 
   constructor(opts: L10nProcessorOptions) {
     this.opts = opts;
-    this.llm = new LLM(opts.provider, opts.model);
+    this.llm = new LLM(opts.provider, opts.model, opts.apiKey);
   }
 
   /**

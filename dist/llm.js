@@ -26,14 +26,17 @@ export class LLM {
     model;
     /** Underlying LangChain chat model instance. */
     llm;
+    /** API key to use (depends on provider). */
+    apiKey;
     /**
      * Constructs a new LLM instance.
      * @param provider - LLM backend (mistral, openai, google).
      * @param model - Model name or ID.
      */
-    constructor(provider, model) {
+    constructor(provider, model, apiKey) {
         this.provider = provider;
         this.model = model;
+        this.apiKey = apiKey;
         this.llm = this._initLLM();
     }
     /**
@@ -44,15 +47,15 @@ export class LLM {
         console.debug(`[DEBUG] ${this.provider} LLM initialization with model ${this.model}`);
         if (this.provider === 'mistral') {
             // Requires MISTRAL_API_KEY in environment
-            return new ChatMistralAI({ model: this.model, temperature: 0, maxRetries: 5 });
+            return new ChatMistralAI({ apiKey: this.apiKey, model: this.model, temperature: 0, maxRetries: 5 });
         }
         else if (this.provider === 'openai') {
             // Requires OPENAI_API_KEY in environment
-            return new ChatOpenAI({ model: this.model, temperature: 0 });
+            return new ChatOpenAI({ apiKey: this.apiKey, model: this.model, temperature: 0 });
         }
         else if (this.provider === 'google') {
             // Requires GOOGLE_API_KEY in environment
-            return new ChatGoogleGenerativeAI({ model: this.model, temperature: 0 });
+            return new ChatGoogleGenerativeAI({ apiKey: this.apiKey, model: this.model, temperature: 0 });
         }
         else {
             throw new Error(`Unknown provider: ${this.provider}`);

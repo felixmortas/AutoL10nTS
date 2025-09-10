@@ -10,5 +10,5 @@
  * Example:
  *   ./main.ts --provider openai --model gpt-4o-mini --arbs-folder ./lib/l10n --files lib/main.dart
  */
-export {};
+export { L10nProcessor } from "./l10nProcessor.js";
 //# sourceMappingURL=main.d.ts.map

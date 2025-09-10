@@ -20,12 +20,14 @@ export declare class LLM {
     model: string;
     /** Underlying LangChain chat model instance. */
     llm: any;
+    /** API key to use (depends on provider). */
+    apiKey: string;
     /**
      * Constructs a new LLM instance.
      * @param provider - LLM backend (mistral, openai, google).
      * @param model - Model name or ID.
      */
-    constructor(provider: string, model: string);
+    constructor(provider: string, model: string, apiKey: string);
     /**
      * Internal: Initializes the correct LangChain wrapper
      * depending on the provider.
