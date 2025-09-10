@@ -1,6 +1,13 @@
 # Changelog
 
-## [0.2.1] - 2025-09-10
+## [0.3.0] - 2025-09-10
+### Added
+- Updated `L10nProcessor` and `LLM` to accept API key via constructor instead of `.env`.
+
+### Changed
+- Removed dependency on `.env` for API keys.
+
+## [0.2.2] - 2025-09-10
 ### Changed
 - Fix L10nProcessor not importable when loaded as package
 
