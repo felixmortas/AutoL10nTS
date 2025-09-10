@@ -16,5 +16,6 @@
     "emitDeclarationOnly": false, // génère le JS + .d.ts
     "sourceMap": true             // optionnel, pratique pour debug
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

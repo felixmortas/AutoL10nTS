@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.1] - 2025-09-10
+### Added
+- Copied `prompts/` folder into `dist/` during build to ensure prompts are included in the npm package.
+- Updated `_loadPrompt` in `LLM` to resolve paths relative to `dist/` using `import.meta.url`, ensuring compatibility in both development and production builds.
+
+### Changed
+- `LLM` now accesses prompts via absolute paths within `dist/` instead of relative paths from project root.
+- Build script updated to include `cpx "prompts/**/*" dist/prompts`.
+
 ## [0.3.0] - 2025-09-10
 ### Added
 - Updated `L10nProcessor` and `LLM` to accept API key via constructor instead of `.env`.

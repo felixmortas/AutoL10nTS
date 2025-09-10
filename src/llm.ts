@@ -20,6 +20,7 @@ import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import { ChatMistralAI } from '@langchain/mistralai';
 import { ChatOpenAI } from '@langchain/openai';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { fileURLToPath } from 'url';
 
 export class LLM {
   /** Which provider to use: "mistral", "openai", "google". */
@@ -75,8 +76,13 @@ export class LLM {
    *   - Loads `{name}.hum` (human message).
    */
   private async _loadPrompt(name: string): Promise<[string, string]> {
-    const sysPath = path.join('prompts', `${name}.sys`);
-    const humPath = path.join('prompts', `${name}.hum`);
+    // Résolution du chemin absolu vers prompts dans dist
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const promptsDir = path.join(__dirname, 'prompts');
+
+    const sysPath = path.join(promptsDir, `${name}.sys`);
+    const humPath = path.join(promptsDir, `${name}.hum`);
 
     try {
       const [sysPrompt, humPrompt] = await Promise.all([
@@ -88,6 +94,7 @@ export class LLM {
       throw new Error(`Missing prompt ${name}: ${sysPath} or ${humPath}`);
     }
   }
+
 
   /**
    * Sends system + human prompts to the LLM and returns the response.

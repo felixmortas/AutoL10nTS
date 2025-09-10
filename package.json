@@ -1,6 +1,6 @@
 {
     "name": "auto-l10n-ts",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "private": false,
     "type": "module",
     "license": "MIT",
@@ -13,7 +13,7 @@
         "CHANGELOG.md"
     ],
     "scripts": {
-        "build": "tsc -p tsconfig.json",
+        "build": "tsc -p tsconfig.json && cpx \"prompts/**/*\" dist/prompts",
         "dev": "tsx src/main.ts",
         "start": "node dist/main.js",
         "test": "vitest"
@@ -26,7 +26,9 @@
         "outDir": "dist",
         "rootDir": "src"
     },
-    "include": ["src"],
+    "include": [
+        "src"
+    ],
     "bin": {
         "auto-l10n-ts": "./dist/main.js"
     },
@@ -40,6 +42,7 @@
         "dotenv": "^16.0.0"
     },
     "devDependencies": {
+        "cpx": "^1.5.0",
         "tsx": "^3.12.6",
         "typescript": "^5.3.0",
         "vitest": "^1.0.0"
