@@ -1,32 +1,48 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-
+/**
+ * Writes content atomically to a file:
+ * - Creates a temporary file.
+ * - Renames it to the target path (atomic move).
+ * - Optionally creates a `.bak` backup if the file already exists.
+ *
+ * Ensures consistency even if the process crashes midway.
+ */
 export async function atomicWrite(filePath: string, content: string): Promise<void> {
     const dir = path.dirname(filePath);
     const backupPath = filePath + '.bak';
+
+    // If the file exists, create a backup
     try {
         await fs.access(filePath);
         await fs.copyFile(filePath, backupPath);
         console.debug(`[DEBUG] .bak backup created : ${backupPath}`);
-    } catch (e) {
-        // file may not exist — that's ok
+    } catch {
+        // File may not exist — safe to ignore
     }
 
-
+    // Write to a temp file, then rename to target (atomic update)
     const tmpName = path.join(dir, `.tmp-${Date.now()}-${path.basename(filePath)}`);
     await fs.writeFile(tmpName, content, { encoding: 'utf8' });
     await fs.rename(tmpName, filePath);
-    console.debug(`[DEBUG] Fichier mis à jour atomiquement : ${filePath}`);
+    console.debug(`[DEBUG] File atomically updated : ${filePath}`);
 }
 
-
+/**
+ * Merges two JSON strings by:
+ * - Parsing both into objects.
+ * - Combining them with preference for keys in `existingJson`.
+ * - Returns a pretty-printed merged JSON string.
+ *
+ * If parsing fails, returns `existingJson` unchanged.
+ */
 export function mergeJsonStrings(existingJson: string, newJson: string): string {
     try {
         console.debug('[DEBUG] Merging JSON files...');
         const existingData = existingJson ? JSON.parse(existingJson) : {};
         const newData = newJson ? JSON.parse(newJson) : {};
-        // conserver l'en-tête du premier (existing) comme dans la version Python fournie
+        // Preserve original keys by spreading newData first, then existingData
         const merged = { ...newData, ...existingData };
         return JSON.stringify(merged, null, 2);
     } catch (e) {
