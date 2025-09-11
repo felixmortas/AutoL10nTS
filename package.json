@@ -1,11 +1,11 @@
 {
     "name": "auto-l10n-ts",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "private": false,
     "type": "module",
     "license": "MIT",
-    "main": "dist/main.js",
-    "types": "dist/main.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "files": [
         "dist/**/*",
         "README.md",
@@ -14,23 +14,15 @@
     ],
     "scripts": {
         "build": "tsc -p tsconfig.json && cpx \"prompts/**/*\" dist/prompts",
-        "dev": "tsx src/main.ts",
-        "start": "node dist/main.js",
+        "dev": "tsx src/cli.ts",
+        "start": "node dist/cli.js",
         "test": "vitest"
-    },
-    "compilerOptions": {
-        "moduleResolution": "NodeNext",
-        "esModuleInterop": true,
-        "allowJs": true,
-        "strict": true,
-        "outDir": "dist",
-        "rootDir": "src"
     },
     "include": [
         "src"
     ],
     "bin": {
-        "auto-l10n-ts": "./dist/main.js"
+        "auto-l10n-ts": "./dist/cli.js"
     },
     "dependencies": {
         "@langchain/core": "^0.3.75",

@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.2] - 2025-09-11
+### Changed
+- Split CLI and library entry points:
+  - Added `cli.ts` as dedicated CLI entry point.
+- Updated `package.json`:
+  - `main` now points to `dist/index.js` instead of `dist/cli.js`.
+  - `types` now points to `dist/index.d.ts`.
+  - `bin` now maps `auto-l10n-ts` to `dist/cli.js` for CLI usage.
+- Removed `main.ts` to avoid mixing library exports and CLI logic.
+
+
 ## [0.3.1] - 2025-09-10
 ### Added
 - Copied `prompts/` folder into `dist/` during build to ensure prompts are included in the npm package.
