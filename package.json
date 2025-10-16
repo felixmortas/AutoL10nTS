@@ -1,6 +1,6 @@
 {
     "name": "auto-l10n-ts",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "private": false,
     "type": "module",
     "license": "MIT",
@@ -12,17 +12,21 @@
         "LICENSE",
         "CHANGELOG.md"
     ],
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "build": "tsc -p tsconfig.json && cpx \"prompts/**/*\" dist/prompts",
         "dev": "tsx src/cli.ts",
         "start": "node dist/cli.js",
-        "test": "vitest"
+        "test": "vitest",
+        "prepublishOnly": "npm run build"
     },
     "include": [
         "src"
     ],
     "bin": {
-        "auto-l10n-ts": "dist/cli.js"
+        "auto-l10n-ts": "./dist/cli.js"
     },
     "dependencies": {
         "@langchain/core": "^0.3.75",
