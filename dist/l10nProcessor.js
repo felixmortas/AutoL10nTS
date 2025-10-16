@@ -28,6 +28,7 @@ export class L10nProcessor {
      */
     async process() {
         const { arbsFolder, files } = this.opts;
+        const backup = this.opts.backup ?? false;
         // Validate ARB folder existence
         const resolvedArbsFolder = path.resolve(arbsFolder);
         try {
@@ -106,11 +107,11 @@ export class L10nProcessor {
                 existing = "{}";
             }
             const newArbContent = mergeJsonStrings(existing, fullArbJson);
-            await atomicWrite(targetArbPath, newArbContent);
+            await atomicWrite(targetArbPath, newArbContent, backup);
             // If the LLM returned updated Flutter content, overwrite the file
             if (updatedFlutter) {
                 console.info(`[INFO] Flutter file update: ${filePath}`);
-                await atomicWrite(filePath, updatedFlutter);
+                await atomicWrite(filePath, updatedFlutter, backup);
             }
         }
         // Translate into other detected languages (except source)
@@ -130,7 +131,7 @@ export class L10nProcessor {
             }
             // Safely merge and write translation
             const newArbContent = mergeJsonStrings(existing, translated);
-            await atomicWrite(arbFile, newArbContent);
+            await atomicWrite(arbFile, newArbContent, backup);
         }
     }
 }

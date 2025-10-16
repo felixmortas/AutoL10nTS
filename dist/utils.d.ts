@@ -6,7 +6,7 @@
  *
  * Ensures consistency even if the process crashes midway.
  */
-export declare function atomicWrite(filePath: string, content: string): Promise<void>;
+export declare function atomicWrite(filePath: string, content: string, backup: boolean): Promise<void>;
 /**
  * Merges two JSON strings by:
  * - Parsing both into objects.

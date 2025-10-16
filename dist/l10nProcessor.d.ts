@@ -14,6 +14,7 @@ export interface L10nProcessorOptions {
     arbsFolder: string;
     files: string[];
     apiKey: string;
+    backup?: boolean;
 }
 export declare class L10nProcessor {
     private llm;

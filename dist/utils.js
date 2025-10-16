@@ -1,14 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
 /**
- * Writes content atomically to a file:
- * - Creates a temporary file.
- * - Renames it to the target path (atomic move).
- * - Optionally creates a `.bak` backup if the file already exists.
- *
- * Ensures consistency even if the process crashes midway.
- */
-export async function atomicWrite(filePath, content) {
+ * Creates a backup copy of a file.
+ * If the file exists, it copies it to the same location with a `.bak` extension.
+*/
+async function backupFiles(filePath, content) {
     const dir = path.dirname(filePath);
     const backupPath = filePath + '.bak';
     // If the file exists, create a backup
@@ -20,6 +16,19 @@ export async function atomicWrite(filePath, content) {
     catch {
         // File may not exist — safe to ignore
     }
+}
+/**
+ * Writes content atomically to a file:
+ * - Creates a temporary file.
+ * - Renames it to the target path (atomic move).
+ * - Optionally creates a `.bak` backup if the file already exists.
+ *
+ * Ensures consistency even if the process crashes midway.
+ */
+export async function atomicWrite(filePath, content, backup) {
+    const dir = path.dirname(filePath);
+    if (backup)
+        await backupFiles(filePath, content);
     // Write to a temp file, then rename to target (atomic update)
     const tmpName = path.join(dir, `.tmp-${Date.now()}-${path.basename(filePath)}`);
     await fs.writeFile(tmpName, content, { encoding: 'utf8' });
