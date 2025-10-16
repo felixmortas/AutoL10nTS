@@ -32,8 +32,11 @@ jobs:
         run: npm test
 
       - name: Prepare for publishing
-        run: VERSION=$(node -p "require('./package.json').version")
-
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          npm version $VERSION --no-git-tag-version
+          echo "Publishing version $VERSION"
+          
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
