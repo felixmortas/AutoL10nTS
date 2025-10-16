@@ -33,7 +33,7 @@ jobs:
 
       - name: Prepare for publishing
         run: |
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION="0.3.3"
           npm version $VERSION --no-git-tag-version
           echo "Publishing version $VERSION"
           
