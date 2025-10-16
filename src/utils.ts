@@ -9,7 +9,7 @@ import path from 'path';
  *
  * Ensures consistency even if the process crashes midway.
  */
-export async function atomicWrite(filePath: string, content: string): Promise<void> {
+async function backupFiles(filePath: string, content: string): Promise<void> {
     const dir = path.dirname(filePath);
     const backupPath = filePath + '.bak';
 
@@ -21,6 +21,11 @@ export async function atomicWrite(filePath: string, content: string): Promise<vo
     } catch {
         // File may not exist — safe to ignore
     }
+}
+
+export async function atomicWrite(filePath: string, content: string, backup: boolean): Promise<void> {
+    const dir = path.dirname(filePath);
+    if (backup) await backupFiles(filePath, content);
 
     // Write to a temp file, then rename to target (atomic update)
     const tmpName = path.join(dir, `.tmp-${Date.now()}-${path.basename(filePath)}`);

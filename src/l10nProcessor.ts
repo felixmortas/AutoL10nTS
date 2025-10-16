@@ -20,6 +20,7 @@ export interface L10nProcessorOptions {
   arbsFolder: string;
   files: string[];
   apiKey: string;
+  backup?: boolean;
 }
 
 export class L10nProcessor {
@@ -40,6 +41,7 @@ export class L10nProcessor {
    */
   public async process(): Promise<void> {
     const { arbsFolder, files } = this.opts;
+    const backup = this.opts.backup ?? false;
 
     // Validate ARB folder existence
     const resolvedArbsFolder = path.resolve(arbsFolder);
@@ -136,12 +138,12 @@ export class L10nProcessor {
         existing = "{}";
       }
       const newArbContent = mergeJsonStrings(existing, fullArbJson);
-      await atomicWrite(targetArbPath, newArbContent);
+      await atomicWrite(targetArbPath, newArbContent, backup);
 
       // If the LLM returned updated Flutter content, overwrite the file
       if (updatedFlutter) {
         console.info(`[INFO] Flutter file update: ${filePath}`);
-        await atomicWrite(filePath, updatedFlutter);
+        await atomicWrite(filePath, updatedFlutter, backup);
       }
     }
 
@@ -172,7 +174,7 @@ export class L10nProcessor {
 
       // Safely merge and write translation
       const newArbContent = mergeJsonStrings(existing, translated);
-      await atomicWrite(arbFile, newArbContent);
+      await atomicWrite(arbFile, newArbContent, backup);
     }
   }
 }
