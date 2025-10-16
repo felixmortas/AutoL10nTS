@@ -22,7 +22,7 @@
         "src"
     ],
     "bin": {
-        "auto-l10n-ts": "./dist/cli.js"
+        "auto-l10n-ts": "dist/cli.js"
     },
     "dependencies": {
         "@langchain/core": "^0.3.75",
